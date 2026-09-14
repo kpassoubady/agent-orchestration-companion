@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Multi-Agent Coordination Surfaces and Shared Controls",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 600]
+  },
+  "components": [
+    {
+      "id": "coordination_need",
+      "type": "external",
+      "label": "Coordination Need",
+      "sublabel": "who coordinates?",
+      "tag": "use the lightest fit",
+      "pos": [35, 265],
+      "size": [155, 74]
+    },
+    {
+      "id": "focused_subagents",
+      "type": "backend",
+      "label": "Subagents",
+      "sublabel": "main session coordinates",
+      "tag": "focused side tasks",
+      "pos": [250, 55],
+      "size": [180, 78]
+    },
+    {
+      "id": "human_agent_view",
+      "type": "frontend",
+      "label": "Agent View",
+      "sublabel": "human coordinates",
+      "tag": "independent sessions",
+      "pos": [250, 185],
+      "size": [180, 78]
+    },
+    {
+      "id": "lead_agent_team",
+      "type": "messagebus",
+      "label": "Agent Teams",
+      "sublabel": "lead agent coordinates",
+      "tag": "experimental",
+      "pos": [250, 315],
+      "size": [180, 78]
+    },
+    {
+      "id": "scripted_workflow",
+      "type": "cloud",
+      "label": "Dynamic Workflow",
+      "sublabel": "script coordinates",
+      "tag": "repeatable multi-pass",
+      "pos": [250, 445],
+      "size": [180, 78]
+    },
+    {
+      "id": "workspace_contract",
+      "type": "database",
+      "label": "Workspace Contract",
+      "sublabel": "base + files + check",
+      "tag": "explicit ownership",
+      "pos": [480, 265],
+      "size": [170, 74]
+    },
+    {
+      "id": "durable_handoff",
+      "type": "database",
+      "label": "Durable Handoff",
+      "sublabel": "commit + diff + risk",
+      "tag": "focused evidence",
+      "pos": [710, 265],
+      "size": [160, 74]
+    },
+    {
+      "id": "integration_gate",
+      "type": "security",
+      "label": "Integration Gate",
+      "sublabel": "merge + full checks",
+      "tag": "human checkpoint",
+      "pos": [930, 265],
+      "size": [140, 74]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Choose one coordination surface",
+      "wraps": ["focused_subagents", "human_agent_view", "lead_agent_team", "scripted_workflow"],
+      "pad": 20
+    },
+    {
+      "kind": "security-group",
+      "label": "Required controls for every surface",
+      "wraps": ["workspace_contract", "durable_handoff", "integration_gate"],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    { "id": "need_to_subagents", "from": "coordination_need", "to": "focused_subagents", "variant": "default" },
+    { "id": "need_to_view", "from": "coordination_need", "to": "human_agent_view", "variant": "default" },
+    { "id": "need_to_teams", "from": "coordination_need", "to": "lead_agent_team", "variant": "dashed" },
+    { "id": "need_to_workflow", "from": "coordination_need", "to": "scripted_workflow", "variant": "default" },
+    { "id": "subagents_to_contract", "from": "focused_subagents", "to": "workspace_contract", "variant": "default" },
+    { "id": "view_to_contract", "from": "human_agent_view", "to": "workspace_contract", "variant": "default" },
+    { "id": "teams_to_contract", "from": "lead_agent_team", "to": "workspace_contract", "variant": "dashed" },
+    { "id": "workflow_to_contract", "from": "scripted_workflow", "to": "workspace_contract", "variant": "default" },
+    { "id": "contract_to_handoff", "from": "workspace_contract", "to": "durable_handoff", "variant": "emphasis" },
+    { "id": "handoff_to_gate", "from": "durable_handoff", "to": "integration_gate", "label": "dependency order", "variant": "security", "labelAt": [900, 353] }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Parallel Agent Orchestration: Evidence Before Integration",
+    "locale": "en",
+    "animation": "trace",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "control-path",
+        "label": "Control path",
+        "focus": ["work_plan", "base_approval", "email_session", "email_handoff", "integration_review", "combined_gates"],
+        "note": "Follow one task from an approved plan through evidence-based integration."
+      },
+      {
+        "id": "parallel-work",
+        "label": "Parallel work",
+        "focus": ["base_approval", "email_session", "sms_session", "email_handoff", "sms_handoff"],
+        "note": "Compare isolated sessions that share a base but own different files."
+      },
+      {
+        "id": "repair-loop",
+        "label": "Repair loop",
+        "focus": ["integration_review", "sms_session", "sms_handoff"],
+        "note": "Failed evidence returns only the bounded task for repair and a new handoff."
+      }
+    ],
+    "viewBox": [970, 500]
+  },
+  "lanes": [
+    { "id": "control", "label": "Human Control and Integration" },
+    { "id": "email_worker", "label": "Email Agent Workspace" },
+    { "id": "sms_worker", "label": "SMS Agent Workspace" }
+  ],
+  "phases": [
+    { "id": "prepare", "label": "Prepare", "fromCol": 0, "toCol": 1 },
+    { "id": "execute", "label": "Execute in isolation", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "admit", "label": "Review and integrate", "fromCol": 4, "toCol": 5, "variant": "security" }
+  ],
+  "mainPath": [
+    "work_plan",
+    "base_approval",
+    "email_session",
+    "email_handoff",
+    "integration_review",
+    "combined_gates"
+  ],
+  "nodes": [
+    { "id": "work_plan", "lane": "control", "col": 0, "type": "backend", "label": "Task Plan", "sublabel": "scope + dependencies", "tag": "named acceptance" },
+    { "id": "base_approval", "lane": "control", "col": 1, "type": "security", "label": "Base Approval", "sublabel": "commit + contracts", "tag": "human checkpoint" },
+    { "id": "email_session", "lane": "email_worker", "col": 2, "type": "backend", "label": "Email Session", "sublabel": "isolated worktree" },
+    { "id": "email_handoff", "lane": "email_worker", "col": 3, "type": "database", "label": "Email Handoff", "sublabel": "commit + focused check", "tag": "admit first" },
+    { "id": "sms_session", "lane": "sms_worker", "col": 2, "type": "backend", "label": "SMS Session", "sublabel": "isolated worktree" },
+    { "id": "sms_handoff", "lane": "sms_worker", "col": 3, "type": "database", "label": "SMS Handoff", "sublabel": "commit + focused check", "tag": "after email" },
+    { "id": "integration_review", "lane": "control", "col": 4, "type": "security", "label": "Handoff Review", "sublabel": "base + diff + risk", "tag": "dependency order" },
+    { "id": "combined_gates", "lane": "control", "col": 5, "type": "cloud", "label": "Integrated", "sublabel": "combined gates pass", "tag": "record evidence" }
+  ],
+  "edges": [
+    { "id": "plan_to_approval", "from": "work_plan", "to": "base_approval", "variant": "security", "role": "main" },
+    { "id": "approval_to_email", "from": "base_approval", "to": "email_session", "variant": "emphasis", "role": "main" },
+    { "id": "email_to_handoff", "from": "email_session", "to": "email_handoff", "variant": "default", "role": "main" },
+    { "id": "approval_to_sms", "from": "base_approval", "to": "sms_session", "variant": "emphasis", "role": "branch" },
+    { "id": "sms_to_handoff", "from": "sms_session", "to": "sms_handoff", "variant": "default", "role": "branch" },
+    { "id": "email_to_review", "from": "email_handoff", "to": "integration_review", "variant": "emphasis", "role": "main" },
+    { "id": "sms_to_review", "from": "sms_handoff", "to": "integration_review", "variant": "default", "role": "branch" },
+    { "id": "review_to_gates", "from": "integration_review", "to": "combined_gates", "variant": "security", "role": "main" },
+    { "id": "review_to_reapproval", "from": "integration_review", "to": "base_approval", "label": "repair bounded task", "variant": "dashed", "role": "error", "route": "return-left", "labelAt": [146, 167] }
+  ]
+}

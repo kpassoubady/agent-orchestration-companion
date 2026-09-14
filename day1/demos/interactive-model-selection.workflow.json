@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Model Selection: Route by Evidence, Risk, and Outcome",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [970, 500]
+  },
+  "lanes": [
+    { "id": "assessment", "label": "Task Evidence" },
+    { "id": "strategy", "label": "Model Strategy and Execution" },
+    { "id": "control", "label": "Controls and Outcome" }
+  ],
+  "phases": [
+    { "id": "classify", "label": "Classify the task", "fromCol": 0, "toCol": 1 },
+    { "id": "configure", "label": "Choose and execute", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "evaluate", "label": "Grade the outcome", "fromCol": 4, "toCol": 5, "variant": "security" }
+  ],
+  "mainPath": [
+    "task_card",
+    "risk_score",
+    "model_effort",
+    "bounded_run",
+    "outcome_grade",
+    "accepted_result"
+  ],
+  "nodes": [
+    { "id": "task_card", "lane": "assessment", "col": 0, "type": "database", "label": "Task Card", "sublabel": "scope + acceptance", "tag": "repository evidence" },
+    { "id": "risk_score", "lane": "assessment", "col": 1, "type": "backend", "label": "Score Task", "sublabel": "complexity + risk", "tag": "cost to verify" },
+    { "id": "model_effort", "lane": "strategy", "col": 2, "type": "backend", "label": "Model + Effort", "sublabel": "capability + budget", "tag": "dated fallback" },
+    { "id": "bounded_run", "lane": "strategy", "col": 3, "type": "cloud", "label": "Bounded Run", "sublabel": "fixed tools + limits", "tag": "scoped permissions" },
+    { "id": "human_gate", "lane": "control", "col": 2, "type": "security", "label": "Human Approval", "sublabel": "security + authority", "tag": "required for high risk" },
+    { "id": "outcome_grade", "lane": "control", "col": 4, "type": "security", "label": "Grade Outcome", "sublabel": "checks + review", "tag": "not model claims" },
+    { "id": "accepted_result", "lane": "control", "col": 5, "type": "cloud", "label": "Accepted", "sublabel": "accepted-task cost", "tag": "record harness" },
+    { "id": "escalation", "lane": "assessment", "col": 5, "type": "messagebus", "label": "Escalate", "sublabel": "change one lever", "tag": "new evidence only" }
+  ],
+  "edges": [
+    { "id": "card_to_score", "from": "task_card", "to": "risk_score", "variant": "default", "role": "main" },
+    { "id": "score_to_strategy", "from": "risk_score", "to": "model_effort", "variant": "emphasis", "role": "main" },
+    { "id": "score_to_human", "from": "risk_score", "to": "human_gate", "label": "high blast radius", "variant": "security", "role": "branch", "labelAt": [213, 291] },
+    { "id": "human_to_strategy", "from": "human_gate", "to": "model_effort", "variant": "security", "role": "branch" },
+    { "id": "strategy_to_run", "from": "model_effort", "to": "bounded_run", "variant": "default", "role": "main" },
+    { "id": "run_to_grade", "from": "bounded_run", "to": "outcome_grade", "label": "grade repository", "variant": "emphasis", "role": "main" },
+    { "id": "grade_to_accept", "from": "outcome_grade", "to": "accepted_result", "label": "checks pass", "variant": "emphasis", "role": "main", "labelAt": [563, 415] },
+    { "id": "grade_to_escalate", "from": "outcome_grade", "to": "escalation", "label": "actionable failure", "variant": "security", "role": "error", "labelAt": [500, 291] },
+    { "id": "escalate_to_score", "from": "escalation", "to": "risk_score", "variant": "dashed", "role": "return", "route": "return-left" }
+  ]
+}
