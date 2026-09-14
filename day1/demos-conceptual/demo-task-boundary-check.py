@@ -6,7 +6,7 @@ Goal: Compare a naive feature split with a dependency-aware plan using computed 
 
 No API key needed. Pure Python standard library.
 
-Run: python3 day1/demos/demo-task-boundary-check.py
+Run: python3 day1/demos-conceptual/demo-task-boundary-check.py
 """
 
 from collections import defaultdict, deque
