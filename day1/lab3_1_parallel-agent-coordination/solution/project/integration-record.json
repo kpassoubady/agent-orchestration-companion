@@ -1,0 +1,18 @@
+{
+  "workspace_assignments": {
+    "agent/email": "../work-email",
+    "agent/sms": "../work-sms"
+  },
+  "merge_order": ["agent/email", "agent/sms"],
+  "approved_before_second_merge": true,
+  "approval_evidence": "Reviewed both handoffs, bounded diffs, focused checks, and unchanged schema before merging agent/sms.",
+  "full_check": {
+    "command": "python3 -m unittest",
+    "status": "passed"
+  },
+  "security_check": {
+    "command": "python3 -m unittest tests.test_security",
+    "status": "passed"
+  },
+  "conflict_resolution": "Preserved the approved email-then-SMS channel order on conflict-practice and did not merge the practice branch to main."
+}

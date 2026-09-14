@@ -1,0 +1,3 @@
+[submodule "lab-workspace-solution"]
+	path = lab-workspace-solution
+	url = https://github.com/kpassoubady/agent-orchestration-lab-ws.git

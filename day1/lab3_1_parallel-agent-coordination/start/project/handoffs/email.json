@@ -1,0 +1,14 @@
+{
+  "task_id": "email-renderer",
+  "base_commit": "TODO",
+  "implementation_commit": "TODO",
+  "changed_files": [],
+  "decisions": [],
+  "verification": {
+    "command": "python3 -m unittest tests.test_email tests.test_security.ChannelSecurityTest.test_email_escapes_untrusted_html",
+    "status": "TODO",
+    "summary": "TODO"
+  },
+  "unresolved_risks": ["TODO"],
+  "next_checkpoint": "TODO"
+}

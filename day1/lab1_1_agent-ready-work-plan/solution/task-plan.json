@@ -1,0 +1,69 @@
+{
+  "scenario": "Retail shipment notifications",
+  "human_approval_point": "A human architect approves the schema check before channel tasks enter Wave 2.",
+  "tasks": [
+    {
+      "id": "schema-contract",
+      "objective": "Define and approve the stable shipment-event contract consumed by all notification workers.",
+      "deliverable": "A validated shipment-event JSON schema.",
+      "files": ["schemas/shipment-event.json"],
+      "depends_on": [],
+      "classification": "human-controlled",
+      "acceptance": ["python3 -m unittest tests.test_schema"],
+      "non_goals": ["Do not implement channel rendering or vendor delivery."]
+    },
+    {
+      "id": "email-renderer",
+      "objective": "Render an email subject and body from an approved shipment event.",
+      "deliverable": "A channel-specific email renderer.",
+      "files": ["channels/email.py"],
+      "depends_on": ["schema-contract"],
+      "classification": "parallel",
+      "acceptance": ["python3 -m unittest tests.test_email"],
+      "non_goals": ["Do not edit the router or send a real email."]
+    },
+    {
+      "id": "sms-renderer",
+      "objective": "Render a length-bounded short message from an approved shipment event.",
+      "deliverable": "A channel-specific short-message renderer.",
+      "files": ["channels/sms.py"],
+      "depends_on": ["schema-contract"],
+      "classification": "parallel",
+      "acceptance": ["python3 -m unittest tests.test_sms"],
+      "non_goals": ["Do not edit the router or call a messaging vendor."]
+    },
+    {
+      "id": "preference-reader",
+      "objective": "Expose the saved channel choices needed by notification routing.",
+      "deliverable": "A preference lookup with deterministic fallback behavior.",
+      "files": ["preferences/reader.py"],
+      "depends_on": ["schema-contract"],
+      "classification": "parallel",
+      "acceptance": ["python3 -m unittest tests.test_preferences"],
+      "non_goals": ["Do not redesign customer identity or persistence."]
+    },
+    {
+      "id": "audit-recorder",
+      "objective": "Record the notification decision and outcome without customer message content.",
+      "deliverable": "A structured audit recorder.",
+      "files": ["audit/recorder.py"],
+      "depends_on": ["schema-contract"],
+      "classification": "parallel",
+      "acceptance": ["python3 -m unittest tests.test_audit"],
+      "non_goals": ["Do not change retention policy or logging infrastructure."]
+    },
+    {
+      "id": "notification-integration",
+      "objective": "Connect approved channel, preference, and audit artifacts through the central router.",
+      "deliverable": "An integrated router with complete acceptance evidence.",
+      "files": ["router.py", "tests/test_notifications.py"],
+      "depends_on": ["email-renderer", "sms-renderer", "preference-reader", "audit-recorder"],
+      "classification": "sequential",
+      "acceptance": [
+        "python3 -m unittest tests.test_notifications",
+        "python3 -m unittest tests.test_security"
+      ],
+      "non_goals": ["Do not alter the event schema or platform gateway configuration."]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "title": "ShipmentEvent",
+  "version": 1,
+  "required": ["order_id", "customer_name", "carrier", "tracking_url"],
+  "additionalProperties": false
+}
