@@ -6,7 +6,7 @@ Goal: Compute whether a task card contains enough durable context for independen
 
 No API key needed. Pure Python standard library.
 
-Run: python3 day1/demos/demo-task-card-transfer.py
+Run: python3 day1/demos-conceptual/demo-task-card-transfer.py
 """
 
 REQUIRED_FIELDS = {

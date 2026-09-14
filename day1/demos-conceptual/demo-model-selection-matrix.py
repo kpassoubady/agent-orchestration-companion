@@ -6,7 +6,7 @@ Goal: Compute dated model and effort recommendations from task evidence.
 
 No API key needed. Pure Python standard library.
 
-Run: python3 day1/demos/demo-model-selection-matrix.py
+Run: python3 day1/demos-conceptual/demo-model-selection-matrix.py
 """
 
 RESEARCH_DATE = "2026-09-13"
