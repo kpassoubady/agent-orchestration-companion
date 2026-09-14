@@ -1,0 +1,18 @@
+{
+  "workspace_assignments": {
+    "agent/email": "TODO",
+    "agent/sms": "TODO"
+  },
+  "merge_order": [],
+  "approved_before_second_merge": false,
+  "approval_evidence": "TODO",
+  "full_check": {
+    "command": "python3 -m unittest",
+    "status": "TODO"
+  },
+  "security_check": {
+    "command": "python3 -m unittest tests.test_security",
+    "status": "TODO"
+  },
+  "conflict_resolution": "TODO"
+}

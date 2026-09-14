@@ -1,0 +1,36 @@
+{
+  "scenario": "Retail shipment notifications",
+  "human_approval_point": "TODO",
+  "tasks": [
+    {
+      "id": "schema",
+      "objective": "TODO define the contract gate",
+      "deliverable": "schemas/shipment-event.json",
+      "files": ["schemas/shipment-event.json"],
+      "depends_on": [],
+      "classification": "parallel",
+      "acceptance": [],
+      "non_goals": []
+    },
+    {
+      "id": "email",
+      "objective": "TODO",
+      "deliverable": "channels/email.py",
+      "files": ["channels/email.py", "router.py"],
+      "depends_on": [],
+      "classification": "parallel",
+      "acceptance": [],
+      "non_goals": []
+    },
+    {
+      "id": "sms",
+      "objective": "TODO",
+      "deliverable": "channels/sms.py",
+      "files": ["channels/sms.py", "router.py"],
+      "depends_on": [],
+      "classification": "parallel",
+      "acceptance": [],
+      "non_goals": []
+    }
+  ]
+}

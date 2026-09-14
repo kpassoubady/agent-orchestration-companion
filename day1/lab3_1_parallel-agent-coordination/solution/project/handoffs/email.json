@@ -1,0 +1,14 @@
+{
+  "task_id": "email-renderer",
+  "base_commit": "a1b2c3d",
+  "implementation_commit": "e4f5a6b",
+  "changed_files": ["channels/email.py", "handoffs/email.json"],
+  "decisions": ["Used standard-library HTML escaping for untrusted event values."],
+  "verification": {
+    "command": "python3 -m unittest tests.test_email tests.test_security.ChannelSecurityTest.test_email_escapes_untrusted_html",
+    "status": "passed",
+    "summary": "Two email and focused security assertions passed."
+  },
+  "unresolved_risks": [],
+  "next_checkpoint": "Human review before integration."
+}
