@@ -43,11 +43,8 @@
       "Bash(brew*)",
       "Bash(./build.sh*)",
       "Bash(./install.sh*)",
-      "Bash(./github_copilot_install.sh*)",
       "Write(/tmp/**)",
-      "Edit(/tmp/**)",
-      "Read(//Users/kangs/.claude/**)",
-      "Read(//Users/kangs/.copilot/**)"
+      "Edit(/tmp/**)"
     ],
     "deny": [
       "Bash(rm*)",
@@ -63,7 +60,6 @@
     ],
     "additionalDirectories": [
       "/tmp",
-      "/Users/kangs/code/github",
       "/dev"
     ]
   }
