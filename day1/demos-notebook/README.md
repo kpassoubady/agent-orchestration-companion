@@ -16,7 +16,7 @@ cells and discuss the evidence before moving on. Every notebook ends with
 | `demo-escalation-from-failure.ipynb` | 2 | Derive a routing decision from a genuinely failing security test | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kpassoubady/agent-orchestration-companion/blob/main/day1/demos-notebook/demo-escalation-from-failure.ipynb) |
 | `demo-integration-gate-real-diff.ipynb` | 3 | Block a green commit whose real diff left its task-card boundary | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kpassoubady/agent-orchestration-companion/blob/main/day1/demos-notebook/demo-integration-gate-real-diff.ipynb) |
 | `demo-two-session-orchestration.ipynb` | 3 | Run two worktree sessions through handoff, ordered merge, and conflict resolution | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kpassoubady/agent-orchestration-companion/blob/main/day1/demos-notebook/demo-two-session-orchestration.ipynb) |
-| `demo-handoff-summary-nokey.ipynb` | 3 (optional) | Generate the handoff summary from a real diff with a local model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kpassoubady/agent-orchestration-companion/blob/main/day1/demos-notebook/demo-handoff-summary-nokey.ipynb) |
+| `demo-handoff-summary.ipynb` | 3 (optional) | Generate the handoff summary from a real diff with a local model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kpassoubady/agent-orchestration-companion/blob/main/day1/demos-notebook/demo-handoff-summary.ipynb) |
 
 ## How the setup cell works
 
@@ -35,7 +35,7 @@ succeed without any Colab-specific configuration.
 Python 3.9 or newer and Git. No API key, no network beyond the initial clone,
 and no installs for the first five notebooks.
 
-The optional `demo-handoff-summary-nokey.ipynb` has a `%pip install` cell for
+The optional `demo-handoff-summary.ipynb` has a `%pip install` cell for
 `transformers` and `torch`, used only to generate the handoff summary prose with
 `google/flan-t5-base` (about a 1 GB download on first use). Skip that cell and
 the notebook still completes, using a deterministic summary and recording

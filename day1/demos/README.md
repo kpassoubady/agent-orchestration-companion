@@ -19,7 +19,7 @@ see [`../demos-conceptual/`](../demos-conceptual/).
 | `demo-escalation-from-failure.py` | 2 | Derive a routing decision from a genuinely failing security test | `python3 day1/demos/demo-escalation-from-failure.py` |
 | `demo-integration-gate-real-diff.py` | 3 | Block a green commit whose real diff left its task-card boundary | `python3 day1/demos/demo-integration-gate-real-diff.py` |
 | `demo-two-session-orchestration.py` | 3 | Run two worktree sessions through handoff, ordered merge, and conflict resolution | `python3 day1/demos/demo-two-session-orchestration.py` |
-| `demo-handoff-summary-nokey.py` | 3 (optional) | Generate the handoff summary field from a real diff with a local model | `python3 day1/demos/demo-handoff-summary-nokey.py` |
+| `demo-handoff-summary.py` | 3 (optional) | Generate the handoff summary field from a real diff with a local model | `python3 day1/demos/demo-handoff-summary.py` |
 | `interactive-model-selection.html` | 2 (supplemental) | Route tasks by evidence and risk, enforce human control, grade outcomes, and escalate with new evidence | Open `day1/demos/interactive-model-selection.html` in a browser |
 | `interactive-multi-agent-coordination.html` | 3 (supplemental) | Compare four coordination surfaces and the workspace, handoff, and integration controls shared by all | Open `day1/demos/interactive-multi-agent-coordination.html` in a browser |
 | `interactive-parallel-orchestration.html` | 3 (supplemental) | Explore isolated workers, evidence handoffs, ordered admission, combined gates, and repair | Open `day1/demos/interactive-parallel-orchestration.html` in a browser |
@@ -49,7 +49,7 @@ The editable Archify sources are the matching `.workflow.json` or
 Python 3.9 or newer and Git. No API key, no network, and no installs for the
 first five demos.
 
-The optional `demo-handoff-summary-nokey.py` uses the local model
+The optional `demo-handoff-summary.py` uses the local model
 `google/flan-t5-base` when `transformers` and the cached model are both
 present. When either is missing it prints why and falls back to a deterministic
 summary, so the demo always completes. To enable the model path once:

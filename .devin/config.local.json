@@ -74,12 +74,10 @@
       "Exec(pytest)",
       "Exec(brew)",
       "Exec(./build.sh *)",
-      "Exec(./install.sh *)",
-      "Exec(./github_copilot_install.sh *)"
+      "Exec(./install.sh *)"
     ],
     "additionalDirectories": [
       "/tmp",
-      "/Users/kangs/code/github",
       "/dev"
     ]
   }
