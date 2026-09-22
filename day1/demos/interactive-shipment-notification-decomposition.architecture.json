@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Shipment Notification: Architecture Before Task Assignment",
+    "output": "interactive-shipment-notification-decomposition.html",
+    "animation": "trace",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "runtime-flow",
+        "label": "Runtime flow",
+        "focus": ["orderService", "shipmentEvent", "notificationRouter", "preferenceReader", "emailRenderer", "smsRenderer", "auditRecorder", "deliveryServices"],
+        "note": "Trace the product outcome before deciding where task boundaries belong."
+      },
+      {
+        "id": "contract-gate",
+        "label": "Contract gate",
+        "focus": ["humanArchitect", "shipmentEvent", "emailRenderer", "smsRenderer", "preferenceReader", "auditRecorder"],
+        "note": "The approved event contract unlocks four independently owned consumers."
+      },
+      {
+        "id": "integration-hub",
+        "label": "Integration hub",
+        "focus": ["notificationRouter", "emailRenderer", "smsRenderer", "preferenceReader", "auditRecorder"],
+        "note": "Reserve the shared router and full acceptance check for one integration owner."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "humanArchitect",
+      "type": "external",
+      "label": "Human Architect",
+      "sublabel": "approval authority",
+      "tag": "Human-controlled",
+      "pos": [320, 70],
+      "size": [170, 70]
+    },
+    {
+      "id": "orderService",
+      "type": "external",
+      "label": "Order Service",
+      "sublabel": "shipment source",
+      "tag": "Existing platform",
+      "pos": [60, 300],
+      "size": [170, 70]
+    },
+    {
+      "id": "shipmentEvent",
+      "type": "messagebus",
+      "label": "Shipment Event",
+      "sublabel": "approved shared contract",
+      "tag": "Task: schema",
+      "pos": [310, 300],
+      "size": [190, 70]
+    },
+    {
+      "id": "notificationRouter",
+      "type": "backend",
+      "label": "Notification Router",
+      "sublabel": "coordinates all paths",
+      "tag": "Task: integration",
+      "pos": [590, 300],
+      "size": [190, 70]
+    },
+    {
+      "id": "preferenceReader",
+      "type": "database",
+      "label": "Preference Reader",
+      "sublabel": "saved channel choices",
+      "tag": "Task: preferences",
+      "pos": [590, 70],
+      "size": [190, 70]
+    },
+    {
+      "id": "emailRenderer",
+      "type": "backend",
+      "label": "Email Renderer",
+      "sublabel": "email bounded context",
+      "tag": "Task: email",
+      "pos": [870, 195],
+      "size": [180, 70]
+    },
+    {
+      "id": "smsRenderer",
+      "type": "backend",
+      "label": "SMS Renderer",
+      "sublabel": "message bounded context",
+      "tag": "Task: SMS",
+      "pos": [870, 405],
+      "size": [180, 70]
+    },
+    {
+      "id": "auditRecorder",
+      "type": "database",
+      "label": "Audit Recorder",
+      "sublabel": "compliance boundary",
+      "tag": "Task: audit",
+      "pos": [590, 530],
+      "size": [190, 70]
+    },
+    {
+      "id": "deliveryServices",
+      "type": "cloud",
+      "label": "Delivery Services",
+      "sublabel": "email and SMS providers",
+      "tag": "Outside feature scope",
+      "pos": [1130, 300],
+      "size": [190, 70]
+    }
+  ],
+  "connections": [
+    {
+      "id": "architectApprovesContract",
+      "from": "humanArchitect",
+      "to": "shipmentEvent",
+      "label": "approves schema",
+      "variant": "security",
+      "labelAt": [405, 154]
+    },
+    {
+      "id": "orderPublishesShipment",
+      "from": "orderService",
+      "to": "shipmentEvent",
+      "label": "publishes shipment",
+      "variant": "emphasis",
+      "labelAt": [270, 296]
+    },
+    {
+      "id": "eventEntersRouter",
+      "from": "shipmentEvent",
+      "to": "notificationRouter",
+      "label": "validated event",
+      "variant": "emphasis",
+      "labelAt": [545, 296]
+    },
+    {
+      "id": "routerReadsPreferences",
+      "from": "notificationRouter",
+      "to": "preferenceReader",
+      "label": "reads channel choices"
+    },
+    {
+      "id": "routerRequestsEmail",
+      "from": "notificationRouter",
+      "to": "emailRenderer",
+      "label": "renders opted-in email",
+      "labelAt": [825, 279]
+    },
+    {
+      "id": "routerRequestsSms",
+      "from": "notificationRouter",
+      "to": "smsRenderer",
+      "label": "renders opted-in SMS",
+      "labelAt": [825, 384]
+    },
+    {
+      "id": "routerRecordsAudit",
+      "from": "notificationRouter",
+      "to": "auditRecorder",
+      "label": "records outcome",
+      "labelAt": [685, 384]
+    },
+    {
+      "id": "emailToDelivery",
+      "from": "emailRenderer",
+      "to": "deliveryServices",
+      "label": "email payload"
+    },
+    {
+      "id": "smsToDelivery",
+      "from": "smsRenderer",
+      "to": "deliveryServices",
+      "label": "SMS payload"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "Gate first",
+      "items": [
+        "A human approves the shipment-event contract before consumer work begins."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Parallel after approval",
+      "items": [
+        "Email, SMS, preferences, and audit own separate files and independent checks."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Integrate last",
+      "items": [
+        "One owner changes router.py and runs the full notification and security checks."
+      ]
+    }
+  ]
+}

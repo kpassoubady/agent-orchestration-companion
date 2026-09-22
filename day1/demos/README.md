@@ -20,6 +20,7 @@ see [`../concepts/demos-conceptual/`](../concepts/demos-conceptual/).
 | `demo-integration-gate-real-diff.py` | 3 | Block a green commit whose real diff left its task-card boundary | `python3 day1/demos/demo-integration-gate-real-diff.py` |
 | `demo-two-session-orchestration.py` | 3 | Run two worktree sessions through handoff, ordered merge, and conflict resolution | `python3 day1/demos/demo-two-session-orchestration.py` |
 | `demo-handoff-summary.py` | 3 (optional) | Generate the handoff summary field from a real diff with a local model | `python3 day1/demos/demo-handoff-summary.py` |
+| `interactive-shipment-notification-decomposition.html` | 1 (supplemental) | Explore runtime flow, the contract-first gate, bounded consumers, and single-owner integration | Open `day1/demos/interactive-shipment-notification-decomposition.html` in a browser |
 | `interactive-model-selection.html` | 2 (supplemental) | Route tasks by evidence and risk, enforce human control, grade outcomes, and escalate with new evidence | Open `day1/demos/interactive-model-selection.html` in a browser |
 | `interactive-multi-agent-coordination.html` | 3 (supplemental) | Compare four coordination surfaces and the workspace, handoff, and integration controls shared by all | Open `day1/demos/interactive-multi-agent-coordination.html` in a browser |
 | `interactive-parallel-orchestration.html` | 3 (supplemental) | Explore isolated workers, evidence handoffs, ordered admission, combined gates, and repair | Open `day1/demos/interactive-parallel-orchestration.html` in a browser |
@@ -29,10 +30,13 @@ substrate, builds the temporary Git sandbox, and runs test targets.
 
 ## Interactive Diagrams
 
-Open any HTML file directly in a modern browser. All three files are
+Open any HTML file directly in a modern browser. All four files are
 self-contained and need no server, install, API key, or network connection.
 Select nodes or relationships to inspect their upstream and downstream context.
 
+- `interactive-shipment-notification-decomposition.html` uses guided views and
+  a reader-controlled trace to connect runtime architecture to contract-first
+  tasks, parallel consumer work, and single-owner router integration.
 - `interactive-model-selection.html` shows evidence-based model and effort
   selection, mandatory human approval for high-risk work, outcome grading, and
   escalation that changes one lever only when new evidence exists.
