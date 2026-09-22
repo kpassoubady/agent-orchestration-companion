@@ -6,7 +6,7 @@ Goal: Create two real Git worktrees, commit independent changes, and integrate t
 
 Requires Git and Python. No API key or network access needed.
 
-Run: python3 day1/demos-conceptual/demo-git-worktree-isolation.py
+Run: python3 day1/concepts/demos-conceptual/demo-git-worktree-isolation.py
 """
 
 import subprocess

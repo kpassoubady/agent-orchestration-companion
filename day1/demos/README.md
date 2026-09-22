@@ -10,7 +10,7 @@ demo fails loudly instead of printing a takeaway that is no longer true.
 
 For notebook versions of these demos, see
 [`../demos-notebook/`](../demos-notebook/). For the print-only concept demos,
-see [`../demos-conceptual/`](../demos-conceptual/).
+see [`../concepts/demos-conceptual/`](../concepts/demos-conceptual/).
 
 | File | Topic | Goal | Run |
 | :--- | :--- | :--- | :--- |

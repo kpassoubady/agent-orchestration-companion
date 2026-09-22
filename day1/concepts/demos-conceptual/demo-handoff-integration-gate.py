@@ -6,7 +6,7 @@ Goal: Compute whether worker handoffs are safe to admit to integration.
 
 No API key needed. Pure Python standard library.
 
-Run: python3 day1/demos-conceptual/demo-handoff-integration-gate.py
+Run: python3 day1/concepts/demos-conceptual/demo-handoff-integration-gate.py
 """
 
 EXPECTED_BASE = "8f31abc"

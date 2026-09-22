@@ -6,7 +6,7 @@ Goal: Show how execution evidence changes one routing decision without blind ret
 
 No API key needed. Pure Python standard library.
 
-Run: python3 day1/demos-conceptual/demo-evidence-based-escalation.py
+Run: python3 day1/concepts/demos-conceptual/demo-evidence-based-escalation.py
 """
 
 INITIAL_ROUTE = {"model": "Claude Sonnet 5", "effort": "high"}
