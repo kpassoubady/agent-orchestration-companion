@@ -99,6 +99,41 @@ git status --short
 
 After resolving, run `git add router.py`, `git commit --no-edit`, and `python3 -m unittest`. Do not merge `conflict-practice` back into `main`. Switch back to `main`, record the conflict decision in `integration-record.json`, and run `python3 verify_record.py`.
 
+## Progressive Hints
+
+Use these hints in order. Stop when you have enough information to continue.
+
+### Hint 1: Confirm Each Session's Workspace
+
+Run `pwd`, `git branch --show-current`, and `git worktree list` before starting either Claude Code session. The email session must run from `work-email` on `agent/email`; the SMS session must run from `work-sms` on `agent/sms`. Both branches should descend from the `lab-base` commit.
+
+### Hint 2: Create Two Commits per Worker
+
+Commit the renderer implementation before editing its handoff. Record `git rev-parse lab-base` as `base_commit` and the implementation commit's `git rev-parse HEAD` value as `implementation_commit`. Then complete and commit the handoff separately so the recorded implementation commit changes exactly one renderer file.
+
+### Hint 3: Make the Handoff Match the Branch
+
+Each `changed_files` list must contain exactly the renderer and its handoff file. Before integration, run `git diff --name-only lab-base..HEAD` in each worktree and compare the output with the handoff. Remove every `TODO`, retain the supplied focused command exactly, and record its status as `passed` only after it succeeds.
+
+### Hint 4: Treat Approval as an Evidence Gate
+
+Do not merge `agent/sms` merely because `agent/email` merged cleanly. A human must review both bounded diffs, both focused results, both commit references, and the unchanged schema first. After both merges, run and record both gates:
+
+```bash
+python3 -m unittest
+python3 -m unittest tests.test_security
+```
+
+The `merge_order` field must reflect the branches actually merged, while `approval_evidence` should state what the reviewer checked before the second merge.
+
+### Hint 5: Expect the Prepared Conflict
+
+The first fixture merge should succeed; the second should stop with `router.py` marked `UU`. This failure is intentional. Remove all conflict markers, resolve the conflicting assignment to `CHANNEL_ORDER = ("email", "sms")`, stage the file, and finish the pending merge commit. Keep this history on `conflict-practice` rather than merging it into `main`.
+
+### Hint 6: Diagnose the Final Verifier
+
+Run `python3 verify_record.py` from `lab-workspace` on `main`. The verifier checks real Git ancestry and reruns recorded commands, so changing JSON alone cannot repair missing commits, extra files, an altered schema, or an unresolved conflict branch. Address the smallest reported mismatch and rerun it.
+
 ## Completion Levels
 
 - Basic: Two isolated worktrees produce passing focused checks and bounded diffs.
@@ -113,4 +148,4 @@ The main branch contains both renderer commits, `python3 -m unittest` passes, `p
 
 Show one handoff and the combined test output. Explain one boundary you enforced, the evidence used before the second merge, and why a clean merge alone would not prove compatibility.
 
-If blocked, read the exact failing test, inspect the smallest owned file, compare the handoff with its task card, ask another group for one hint, and only then inspect `solution/`.
+If blocked, read the exact failing test, inspect the smallest owned file, compare the handoff with its task card, ask another group for one hint, and only then inspect `solution/`. For a separate runnable reference with complete Git history, return to this lab directory and run `python3 solution/setup_lab.py lab-workspace-solution`.
