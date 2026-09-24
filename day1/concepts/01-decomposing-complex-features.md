@@ -1,8 +1,6 @@
 # Decomposing Complex Features for Multi-Agent Execution
 Reference for turning a feature brief into bounded, verifiable tasks that agents can execute with limited coordination.
 
----
-
 ## Core Mechanism
 
 Decomposition begins with an observable product outcome, a repository map, and the contracts that connect parts of the system. The planner identifies bounded contexts, structural hub files, shared schemas, and verification commands before assigning work. Each task then produces one named deliverable and owns a clear set of files.
