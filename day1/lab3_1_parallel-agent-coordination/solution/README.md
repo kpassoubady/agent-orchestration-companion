@@ -20,10 +20,10 @@ From the companion repository root:
 
 ```bash
 cd day1/lab3_1_parallel-agent-coordination/solution
-python3 setup_lab.py lab-workspace-solution
+python3 setup_lab.py
 ```
 
-The target directory must not already exist. If `lab-workspace-solution` exists, choose a different target name rather than overwriting it.
+By default, the script creates `lab-workspace-solution` in your system temporary directory, outside the companion repository. It prints the absolute path when setup finishes. The target directory must not already exist. To choose another location, pass its path as the first argument; the script never overwrites an existing directory.
 
 The setup command creates a new Git repository and prints output similar to:
 
@@ -42,7 +42,7 @@ The absolute path and base commit vary between runs.
 Enter the generated repository and run both completion checks:
 
 ```bash
-cd lab-workspace-solution
+cd /absolute/path/printed/by/setup
 python3 -m unittest
 python3 verify_record.py
 ```

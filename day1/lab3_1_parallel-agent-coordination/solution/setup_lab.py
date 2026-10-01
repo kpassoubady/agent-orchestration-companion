@@ -5,11 +5,12 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 START_SOURCE = Path(__file__).parents[1] / "start" / "project"
 SOLUTION_SOURCE = Path(__file__).parent / "project"
-DEFAULT_TARGET = "lab-workspace-solution"
+DEFAULT_TARGET = Path(tempfile.gettempdir()) / "lab-workspace-solution"
 
 FOCUSED = {
     "email": "python3 -m unittest tests.test_email tests.test_security.ChannelSecurityTest.test_email_escapes_untrusted_html",
