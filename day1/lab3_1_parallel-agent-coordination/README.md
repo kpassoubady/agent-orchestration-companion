@@ -86,6 +86,19 @@ python3 -m unittest
 
 Complete the workspace, merge-order, approval, full-check, and security-check fields in `integration-record.json`. Leave only `conflict_resolution` pending.
 
+## Automated Orchestration (Trick of the Trade)
+
+Instead of manually typing `git merge` and looking up commands from JSON files, real orchestrators automate this process. We have included an `orchestrate.sh` script in your project root that reads the handoff files using `jq`. The script accepts only the two expected focused test commands; it does not execute arbitrary commands from handoff data.
+
+The automated path requires `jq`. For a clean demonstration, start with a fresh workspace created by the setup command above. If you have already integrated either worker, inspect the repository state and use a fresh workspace to rerun the automation rather than resetting existing work.
+
+```bash
+chmod +x orchestrate.sh
+./orchestrate.sh
+```
+
+After the email merge and focused check, the script pauses for human approval before merging SMS. Review both handoffs, changed-file boundaries, focused results, and the unchanged schema at that checkpoint. After approval, the script runs the SMS-focused check, full suite, and security suite.
+
 ## Prepared Conflict
 
 Create a disposable branch from the integrated state, merge both conflict fixtures, and resolve the conflict in `router.py` to preserve `CHANNEL_ORDER = ("email", "sms")`:
@@ -148,4 +161,4 @@ The main branch contains both renderer commits, `python3 -m unittest` passes, `p
 
 Show one handoff and the combined test output. Explain one boundary you enforced, the evidence used before the second merge, and why a clean merge alone would not prove compatibility.
 
-If blocked, read the exact failing test, inspect the smallest owned file, compare the handoff with its task card, ask another group for one hint, and only then inspect `solution/`. For a separate runnable reference with complete Git history, return to this lab directory and run `python3 solution/setup_lab.py lab-workspace-solution`.
+If blocked, read the exact failing test, inspect the smallest owned file, compare the handoff with its task card, ask another group for one hint, and only then inspect `solution/`. For a separate runnable reference with complete Git history, return to this lab directory and run `python3 solution/setup_lab.py`. The script creates the reference workspace in your system temporary directory and prints its absolute path.
