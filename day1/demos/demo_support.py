@@ -57,20 +57,34 @@ def run_tests(target, cwd):
 
 
 def find_substrate():
-    """Locate lab-workspace-solution/, cloning the repo on Colab if needed."""
+    """Locate lab-workspace-solution/, cloning the repo on Colab if needed.
+
+    The substrate is a Git submodule, so a plain shallow clone leaves it empty.
+    Any checkout that has the repo files but not the submodule contents gets the
+    submodule initialised in place instead of being cloned again.
+    """
+    environment = dict(os.environ, GIT_TERMINAL_PROMPT="0")  # never hang on a credential prompt
     directory = Path.cwd()
     for _ in range(6):
         if (directory / MARKER).exists():
             return directory / SUBSTRATE
+        if (directory / ".gitmodules").exists() and (directory / "day1" / "demos").is_dir():
+            subprocess.run(
+                ["git", "-C", str(directory), "submodule", "update", "--init", "--depth", "1", str(SUBSTRATE)],
+                capture_output=True,
+                text=True,
+                env=environment,
+            )
+            if (directory / MARKER).exists():
+                return directory / SUBSTRATE
         directory = directory.parent
 
     clone = Path.cwd() / "agent-orchestration-companion"
     if not (clone / MARKER).exists():
         print(f"Course files not found near {Path.cwd()}.")
         print(f"Cloning {REPO_URL} ...")
-        environment = dict(os.environ, GIT_TERMINAL_PROMPT="0")  # never hang on a credential prompt
         result = subprocess.run(
-            ["git", "clone", "--depth", "1", "-q", REPO_URL, str(clone)],
+            ["git", "clone", "--depth", "1", "--recurse-submodules", "--shallow-submodules", "-q", REPO_URL, str(clone)],
             capture_output=True,
             text=True,
             env=environment,
@@ -81,7 +95,7 @@ def find_substrate():
                 f"  git said: {result.stderr.strip().splitlines()[-1] if result.stderr.strip() else 'clone failed'}\n\n"
                 "Run the demo from inside a checkout of the companion repository,\n"
                 "or clone it first and re-run from that folder:\n"
-                f"  git clone {REPO_URL}\n"
+                f"  git clone --recurse-submodules {REPO_URL}\n"
                 "  cd agent-orchestration-companion\n"
                 "  python3 day1/demos/<demo-name>.py"
             )
